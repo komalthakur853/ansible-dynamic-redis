@@ -1,0 +1,21 @@
+---
+- name: Install Redis on Red Hat and Debian-based systems
+  hosts: all
+  become: yes
+  tasks:
+    - name: Determine OS type
+      ansible.builtin.setup:
+      register: setup_output
+
+    - name: Install Redis on Red Hat
+      ansible.builtin.yum:
+        name: redis
+        state: present
+      when: "'RedHat' in setup_output.ansible_facts['ansible_os_family']"
+
+    - name: Install Redis on Debian
+      ansible.builtin.apt:
+        name: redis-server
+        state: present
+        update_cache: yes
+      when: "'Debian' in setup_output.ansible_facts['ansible_os_family']"
