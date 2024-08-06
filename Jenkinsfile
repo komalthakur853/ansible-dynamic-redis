@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_INVENTORY = 'dynamic-inventory.json'
+        ANSIBLE_INVENTORY = 'dynamic_inventory.json'
         ANSIBLE_PLAYBOOK = 'install_redis.yml'
     }
 
