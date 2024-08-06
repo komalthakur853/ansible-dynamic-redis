@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Set up environment variables
         ANSIBLE_INVENTORY = 'dynamic-inventory.json'
         ANSIBLE_PLAYBOOK = 'install_redis.yml'
     }
@@ -10,7 +9,6 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                // Checkout code from the Git repository without credentials
                 git branch: 'main', url: 'https://github.com/komalthakur853/ansible-dynamic-redis.git'
             }
         }
@@ -27,11 +25,11 @@ pipeline {
 
         stage('Add SSH Host Key') {
             steps {
-                // Add the SSH host key for the inventory host
+                // Bypass SSH host key checking
                 sh '''
-                    # Extract the host from the inventory file and add its SSH key
-                    HOST=$(jq -r '.all.hosts.debian_host.ansible_host' ${ANSIBLE_INVENTORY})
-                    ssh-keyscan -H ${HOST} >> ~/.ssh/known_hosts
+                    echo 'Host *' >> ~/.ssh/config
+                    echo '    StrictHostKeyChecking no' >> ~/.ssh/config
+                    chmod 600 ~/.ssh/config
                 '''
             }
         }
@@ -49,7 +47,6 @@ pipeline {
 
     post {
         always {
-            // Clean up or perform post-build actions
             echo 'Pipeline execution completed.'
         }
     }
