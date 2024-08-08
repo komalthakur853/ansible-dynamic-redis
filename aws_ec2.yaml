@@ -5,8 +5,7 @@ regions:
 
 filters:
   tag:Name:
-    - 'Instance_1'
-    - 'Instance_2'
+    - 'Redis-1'
 
 compose:
-    ansible_host: 
+    ansible_host: 98.80.72.158 
