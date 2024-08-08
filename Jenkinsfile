@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_INVENTORY = 'dynamic_inventory.json'
+        ANSIBLE_INVENTORY = 'aws_ec2.yaml'
         ANSIBLE_PLAYBOOK = 'install_redis.yml'
     }
 
@@ -13,26 +13,7 @@ pipeline {
             }
         }
         
-        stage('Generate Inventory') {
-            steps {
-                sh '''
-                    chmod +x ./dynamic_inventory.py
-                    ./dynamic_inventory.py > ${ANSIBLE_INVENTORY}
-                    cat ${ANSIBLE_INVENTORY}
-                '''
-            }
-        }
-
-        stage('Add SSH Host Key') {
-            steps {
-                // Bypass SSH host key checking
-                sh '''
-                    echo 'Host *' >> ~/.ssh/config
-                    echo '    StrictHostKeyChecking no' >> ~/.ssh/config
-                    chmod 600 ~/.ssh/config
-                '''
-            }
-        }
+    }
         
         stage('Run Ansible Playbook') {
             steps {
