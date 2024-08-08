@@ -1,11 +1,10 @@
----
 plugin: aws_ec2
 regions:
-    - us-east-2
+  - us-east-2
 
 filters:
   tag:Name:
     - 'Redis-1'
 
 compose:
-    ansible_host: 98.80.72.158 
+  ansible_host: 98.80.72.158
