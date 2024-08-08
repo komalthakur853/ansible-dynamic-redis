@@ -5,6 +5,9 @@ regions:
 filters:
   tag:Name:
     - 'Redis-1'
+keyed_groups:
+  - key: Name
+    prefix: tag
 
 compose:
   ansible_host: 98.80.72.158
