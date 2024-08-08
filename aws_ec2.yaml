@@ -8,3 +8,4 @@ filters:
 
 compose:
   ansible_host: 98.80.72.158
+  ansible_user: ubuntu
